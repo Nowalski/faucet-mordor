@@ -7,7 +7,7 @@ import { ZupassLogin } from './zupass/ZupassLogin';
 
 export interface IFaucetInputProps {
   faucetContext: IFaucetContext;
-  faucetConfig: IFaucetConfig;
+  faucetConfig: IFaucetConfig
   defaultAddr?: string;
   submitInputs(inputs: any): Promise<void>;
 }
@@ -40,7 +40,7 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
       inputTypes.push("ENS name");
     }
     else {
-      inputTypes.push("ETC address"); // Change from "ETH address" to "ETC address"
+      inputTypes.push("ETH address");
       if(this.props.faucetConfig.modules.ensname)
         inputTypes.push("ENS name");
     }
@@ -58,7 +58,7 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
         <input 
           className="form-control" 
           value={this.state.targetAddr} 
-          placeholder={"Please enter ETC address"} // Update the placeholder to ETC
+          placeholder={"Please enter " + (inputTypes.join(" or "))} 
           onChange={(evt) => this.setState({ targetAddr: evt.target.value })} 
         />
         {needGithubAuth ? 
@@ -91,10 +91,10 @@ export class FaucetInput extends React.PureComponent<IFaucetInputProps, IFaucetI
             className="btn btn-success start-action" 
             onClick={(evt) => this.onSubmitBtnClick()} 
             disabled={this.state.submitting}>
-              {this.state.submitting ? 
-                <span className='inline-spinner'>
-                  <img src={(this.props.faucetContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
-                </span>
+              {this.state.submitting ?
+              <span className='inline-spinner'>
+                <img src={(this.props.faucetContext.faucetUrls.imagesUrl || "/images") + "/spinner.gif"} className="spinner" />
+              </span>
               : null}
               {submitBtnCaption}
           </button>
